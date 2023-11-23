@@ -34,8 +34,8 @@ class Annonce
     #[ORM\ManyToOne(inversedBy: 'Annonces')]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Category::class)]
-    private Collection $Categories;
+    #[ORM\ManyToOne(inversedBy: 'annonces')]
+    private ?Category $category = null;
 
     public function __construct()
     {
@@ -170,6 +170,18 @@ class Annonce
     public function removeComment(User $comment): static
     {
         $this->comments->removeElement($comment);
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
