@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Comment;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,9 +15,14 @@ class CommentType extends AbstractType
         $builder
             ->add('Content')
             ->add('Date')
-            ->add('users')
-            ->add('annonces')
-        ;
+            ->add('User', EntityType::class, [
+                'class' => 'App\Entity\User',
+                'choice_label' => 'id',
+            ])
+            ->add('Annonce', EntityType::class, [
+                'class' => 'App\Entity\Annonce',
+                'choice_label' => 'id',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

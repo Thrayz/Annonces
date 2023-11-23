@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Annonce;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,9 +18,14 @@ class AnnonceType extends AbstractType
             ->add('Description')
             ->add('Date')
             ->add('State')
-            ->add('user')
-            ->add('category')
-        ;
+            ->add('User', EntityType::class, [
+                'class' => 'App\Entity\User',
+                'choice_label' => 'id',
+            ])
+            ->add('Category', EntityType::class, [
+                'class' => 'App\Entity\Category',
+                'choice_label' => 'id',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
