@@ -55,24 +55,24 @@ class Comment
         return $this;
     }
 
-    public function getUsers(): ?User
+    public function getUser(): ?User
     {
         return $this->users;
     }
 
-    public function setUsers(?User $users): static
+    public function setUser(?User $users): static
     {
         $this->users = $users;
 
         return $this;
     }
 
-    public function getAnnonces(): ?Annonce
+    public function getAnnonce(): ?Annonce
     {
         return $this->annonces;
     }
 
-    public function setAnnonces(?Annonce $annonces): static
+    public function setAnnonce(?Annonce $annonces): static
     {
         $this->annonces = $annonces;
 

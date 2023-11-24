@@ -30,6 +30,9 @@ class User
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Annonce::class)]
     private Collection $Annonces;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    private Collection $Comments;
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Category::class)]
     private Collection $Categories;
 
