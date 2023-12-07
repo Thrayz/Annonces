@@ -1,37 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Comment index{% endblock %}
+{% block title %}Comment Index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Include Bootstrap CSS from CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
 
 {% block body %}
-    <h1>Comment index</h1>
+    <div class="container mt-4">
+        <h1>Comment Index</h1>
 
-    <table class="table">
-        <thead>
+        <table class="table table-striped">
+            <thead class="thead-dark">
             <tr>
                 <th>Id</th>
                 <th>Content</th>
-                <th>Date</th>
-                <th>actions</th>
+                <!-- Add more columns as needed -->
             </tr>
-        </thead>
-        <tbody>
-        {% for comment in comments %}
-            <tr>
-                <td>{{ comment.id }}</td>
-                <td>{{ comment.Content }}</td>
-                <td>{{ comment.Date ? comment.Date|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_comment_show', {'id': comment.id}) }}">show</a>
-                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for comment in pagination %}
+                <tr>
+                    <td>{{ comment.id }}</td>
+                    <td>{{ comment.content }}</td>
+                    <!-- Add more columns as needed -->
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_comment_new') }}">Create new</a>
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}
