@@ -10,3 +10,7 @@ delete_user:
     path: '/delete/{id}'
     controller: 'App\Controller\UserController::deleteUser'
     methods: ['DELETE']
+
+registration:
+    path: '/register'
+    controller: 'App\Controller\RegistrationController::index'
