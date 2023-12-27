@@ -4,7 +4,7 @@
 
 {% block body %}
     {# templates/annonce/search.html.twig #}
-
+    <a href="{{ path('app_annonce_index') }}">back to list</a>
     {{ form_start(form) }}
     {{ form_row(form.keyword) }}
     <button type="submit">Search</button>
