@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Annonce index{% endblock %}
+{% block title %}Annonce Index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
 
 {% block body %}
+
 
     <form method="post">
 
@@ -69,6 +75,13 @@
 
        </style>
         <thead>
+
+    <div class="container mt-4">
+        <h1>Annonce Index</h1>
+
+        <table class="table">
+            <thead class="thead-dark">
+
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -76,6 +89,7 @@
                 <th>Description</th>
                 <th>Date</th>
                 <th>State</th>
+
                 <th>actions</th>
             </tr>
         </thead>
@@ -94,14 +108,35 @@
                     <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}">show</a>
                     <a href="{{ path('app_annonce_edit', {'id': annonce.id}) }}">edit</a>
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_annonce_new') }}">Create new</a>
+                <th>Actions</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for annonce in pagination %}
+                <tr>
+                    <td>{{ annonce.id }}</td>
+                    <td>{{ annonce.Name }}</td>
+                    <td>{{ annonce.Images }}</td>
+                    <td>{{ annonce.Description }}</td>
+                    <td>{{ annonce.Date ? annonce.Date|date('Y-m-d') : '' }}</td>
+                    <td>{{ annonce.State }}</td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('app_annonce_show', {'id': annonce.id}) }}">Show</a>
+                        <a class="btn btn-warning" href="{{ path('app_annonce_edit', {'id': annonce.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {{ knp_pagination_render(pagination) }}
+
+        <a class="btn btn-success" href="{{ path('app_annonce_new') }}">Create New</a>
+    </div>
 {% endblock %}
