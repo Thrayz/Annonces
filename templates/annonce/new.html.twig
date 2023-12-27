@@ -10,9 +10,9 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous">
 <div class="container my-5 p-5" style="border:1px solid black;">
+    <header></header>
     <h4 class="text-center">Create new Announcement</h4>
     {{ include('annonce/_form.html.twig') }}
 </div>
-    <a href="{{ path('app_annonce_index') }}">back to list</a>
-    {{ include('annonce/_delete_form.html.twig') }}
+
 {% endblock %}
