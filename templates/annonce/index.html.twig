@@ -3,16 +3,18 @@
 {% block title %}Annonce index{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <nav class="navbar navbar-expand-md bg-dark navbar-light">
+    <!-- Brand -->
+        <a style="color: #EDE9FE" class="navbar-brand" href="#"><h1>Annonce List</h1></a>
+    </nav>
 
-    <form method="post">
+    <table class="table table-striped table-bordered">
 
-        <h1>Annonce List</h1>
-        {# Search Form #}
-
-    </form>
-    <table class="table">
-
-        <thead>
+        <thead class=" table-dark">
         <tr>
             <th>Id</th>
             <th>Name</th>
@@ -35,8 +37,8 @@
                 <td>{{ annonce.Date ? annonce.Date|date('Y-m-d') : '' }}</td>
                 <td>{{ annonce.State }}</td>
                 <td>
-                    <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}">show</a>
-                    <a href="{{ path('app_annonce_edit', {'id': annonce.id}) }}">edit</a>
+                    <a type="button" href="{{ path('app_annonce_show', {'id': annonce.id}) }}" class="btn btn-primary">show</a>
+                    <a type="button" href="{{ path('app_annonce_edit', {'id': annonce.id}) }}" class = "btn btn-info">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -47,5 +49,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_annonce_new') }}">Create new</a>
+    <center><a type="button"  href="{{ path('app_annonce_new') }}" class="btn  btn-success">Create new</a></center>
+
 {% endblock %}
