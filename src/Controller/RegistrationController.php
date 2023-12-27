@@ -2,34 +2,46 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\RegisterType;
-use App\Form\UserType;
-use Doctrine\ORM\EntityManagerInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\User;
+use App\Form\RegistrationFormType;
 
-class RegistrationController extends AbstractController
-{
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, EntityManagerInterface $entityManager): Response
+/**
+ * @method getDoctrine()
+ */
+class RegistrationController extends AbstractController{
+
+    /**
+     * @Route("/register", name="app_register")
+     */
+    private function register(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
-        $form = $this->createForm(RegisterType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_annonce_index',[], Response::HTTP_SEE_OTHER);
+            // do anything else you need here, like send an email
+            return $this->redirectToRoute('app_homepage');
         }
-
         return $this->render('registration/register.html.twig', [
-            'form' => $form->createView(),
-            'user' => $user
+            'registrationForm' => $form->createView(),
         ]);
     }
+
+
+
 }
