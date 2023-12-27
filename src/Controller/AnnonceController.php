@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonce;
 use App\Form\AnnonceType;
+use App\Form\SearchAnnouncementType;
 use App\Repository\AnnonceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,32 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/annonce')]
 class AnnonceController extends AbstractController
 {
+
+
+
+    #[Route('/', name: 'search', methods: ['GET', 'POST'])]
+    public function search(Request $request, AnnonceRepository $annonceRepository, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(SearchAnnouncementType::class);
+        $form->handleRequest($request);
+
+        $annonces = $annonceRepository->findAll();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            // Use $data to perform the search in your repository
+            $annonces = $annonceRepository->findBy(array('Name' => $data));
+
+        }
+
+        return $this->render('annonce/index.html.twig', [
+            'annonces' => $annonces,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+  
     #[Route('/', name: 'app_annonce_index', methods: ['GET'])]
     public function index(Request $request, AnnonceRepository $annonceRepository, PaginatorInterface $paginator): Response
     {
@@ -31,8 +58,6 @@ class AnnonceController extends AbstractController
             'pagination' => $pagination,
         ]);
     }
-
-
 
     #[Route('/new', name: 'app_annonce_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

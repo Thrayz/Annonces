@@ -8,19 +8,109 @@
 {% endblock %}
 
 {% block body %}
+
+
+    <form method="post">
+
+        <input type="submit" name="search">
+
+    </form>
+    <h1>Annonce index</h1>
+    {# Search Form #}
+
+    <table class="table">
+       <style>/* index.css */
+
+
+           h1{
+               color: #333;
+               font-size: 30px;
+               margin-bottom: 20px;
+           }
+           body {
+               font-family: Arial, sans-serif;
+               background-color: #f4f4f4;
+               color: #333;
+               margin: 0;
+               padding: 0;
+           }
+
+           th{
+
+           }
+           form {
+               margin-bottom: 20px;
+           }
+
+           .table {
+               width: 100%;
+               border-collapse: collapse;
+               margin-top: 20px;
+           }
+
+           .table th, .table td {
+               border: 1px solid #ddd;
+               padding: 8px;
+               text-align: left;
+           }
+
+           .table th {
+               background-color: #f2f2f2;
+           }
+
+           .table td {
+               background-color: #fff;
+           }
+
+           a {
+               color: #0066cc;
+               text-decoration: none;
+               margin-right: 10px;
+           }
+
+           a:hover {
+               text-decoration: underline;
+           }
+
+
+       </style>
+        <thead>
+
     <div class="container mt-4">
         <h1>Annonce Index</h1>
 
         <table class="table">
             <thead class="thead-dark">
+
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Images</th>
+                <th>Images </th>
                 <th>Description</th>
                 <th>Date</th>
                 <th>State</th>
+
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+        {% for annonce in annonces %}
+            <tr>
+                <td>{{ annonce.id }}</td>
+                <td>{{ annonce.Name }}</td>
+                <td>{{ annonce.Images }}</td>
+                <td>{{ annonce.Description }}</td>
+                <td>{{ annonce.Date ? annonce.Date|date('Y-m-d') : '' }}</td>
+                <td>{{ annonce.State }}</td>
+                <td>
+                    <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}">show</a>
+                    <a href="{{ path('app_annonce_edit', {'id': annonce.id}) }}">edit</a>
+                </td>
+
                 <th>Actions</th>
+
             </tr>
             </thead>
             <tbody>
