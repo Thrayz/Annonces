@@ -3,52 +3,180 @@
 {% block title %}Annonce index{% endblock %}
 
 {% block body %}
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-    <nav class="navbar navbar-expand-md bg-dark navbar-light">
-    <!-- Brand -->
-        <a style="color: #EDE9FE" class="navbar-brand" href="#"><h1>Announcement List</h1></a>
-    </nav>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+    body {
+        color: #566787;
+        background: #f5f5f5;
+        font-family: 'Roboto', sans-serif;
+    }
+    .table-responsive {
+        margin: 30px 0;
+    }
+    .table-wrapper {
+        min-width: 1000px;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+    .table-title {
+        padding-bottom: 10px;
+        margin: 0 0 10px;
+    }
+    .table-title h2 {
+        margin: 8px 0 0;
+        font-size: 22px;
+    }
+    .search-box {
+        position: relative;
+        float: right;
+    }
+    .search-box input {
+        height: 34px;
+        border-radius: 20px;
+        padding-left: 35px;
+        border-color: #ddd;
+        box-shadow: none;
+    }
+    .search-box input:focus {
+        border-color: #3FBAE4;
+    }
+    .search-box i {
+        color: #a0a5b1;
+        position: absolute;
+        font-size: 19px;
+        top: 8px;
+        left: 10px;
+    }
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+    }
+    table.table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fcfcfc;
+    }
+    table.table-striped.table-hover tbody tr:hover {
+        background: #f5f5f5;
+    }
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    table.table td:last-child {
+        width: 130px;
+    }
+    table.table td a {
+        color: #a0a5b1;
+        display: inline-block;
+        margin: 0 5px;
+    }
+    table.table td a.view {
+        color: #03A9F4;
+    }
+    table.table td a.edit {
+        color: #FFC107;
+    }
+    table.table td a.delete {
+        color: #E34724;
+    }
+    table.table td i {
+        font-size: 19px;
+    }
+    .pagination {
+        float: right;
+        margin: 0 0 5px;
+    }
+    .pagination li a {
+        border: none;
+        font-size: 95%;
+        width: 30px;
+        height: 30px;
+        color: #999;
+        margin: 0 2px;
+        line-height: 30px;
+        border-radius: 30px !important;
+        text-align: center;
+        padding: 0;
+    }
+    .pagination li a:hover {
+        color: #666;
+    }
+    .pagination li.active a {
+        background: #03A9F4;
+    }
+    .pagination li.active a:hover {
+        background: #0397d6;
+    }
+    .pagination li.disabled i {
+        color: #ccc;
+    }
+    .pagination li i {
+        font-size: 16px;
+        padding-top: 6px
+    }
+    .hint-text {
+        float: left;
+        margin-top: 6px;
+        font-size: 95%;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Announcement List</h2></div>
+                    <div class="col-sm-4">
+                        <div class="search-box">
+                            <i class="material-icons">&#xE8B6;</i>
+                            <input type="text" class="form-control" placeholder="Search&hellip;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                <tr>   <th>Id</th>
+                    <th>Name</th>
+                    <th>Images </th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>State</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for annonce in annonces %}
+                <tr>
+                    <td>{{ annonce.id }}</td>
+                    <td>{{ annonce.Name }}</td>
+                    <td>{{ annonce.Images }}</td>
+                    <td>{{ annonce.Description }}</td>
+                    <td>{{ annonce.Date ? annonce.Date|date('Y-m-d') : '' }}</td>
+                    <td>{{ annonce.State }}</td>
+                    <td>
+                        <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
+                        <a href="{{ path('app_annonce_edit', {'id': annonce.id}) }}" class="edit" title="Edit" data-toggle="tooltip" ><i class="material-icons">&#xE254;</i></a>
+                        <a href="" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                    </td>
 
-    <table class="table table-striped table-bordered">
+                </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                <a type="button"  href="{{ path('app_annonce_new') }}" class="btn  btn-success">Create new</a>
 
-        <thead class=" table-dark">
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Images </th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>State</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-
-
-        {% for annonce in annonces %}
-            <tr>
-                <td>{{ annonce.id }}</td>
-                <td>{{ annonce.Name }}</td>
-                <td>{{ annonce.Images }}</td>
-                <td>{{ annonce.Description }}</td>
-                <td>{{ annonce.Date ? annonce.Date|date('Y-m-d') : '' }}</td>
-                <td>{{ annonce.State }}</td>
-                <td>
-                    <a type="button" href="{{ path('app_annonce_show', {'id': annonce.id}) }}" class="btn btn-primary">show</a>
-                    <a type="button" href="{{ path('app_annonce_edit', {'id': annonce.id}) }}" class = "btn btn-info">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <center><a type="button"  href="{{ path('app_annonce_new') }}" class="btn  btn-success">Create new</a></center>
-
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
