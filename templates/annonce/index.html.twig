@@ -3,6 +3,7 @@
 {% block title %}Annonce index{% endblock %}
 
 {% block body %}
+
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -166,6 +167,7 @@
                         <a href="" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                     </td>
 
+
                 </tr>
                 {% else %}
                     <tr>
@@ -174,9 +176,11 @@
                 {% endfor %}
                 <a type="button"  href="{{ path('app_annonce_new') }}" class="btn  btn-success">Create new</a>
 
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 {% endblock %}
+
