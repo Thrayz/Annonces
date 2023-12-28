@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}User Index{% endblock %}
+<<<<<<< HEAD
 
 {% block stylesheets %}
     {{ parent() }}
@@ -77,3 +78,64 @@
 
     </div>
 {% endblock %}
+=======
+
+{% block body %}
+    <div class="container mt-4">
+        <style>
+            body {
+                background-color: #f8f9fa; /* Bootstrap body background color */
+            }
+
+            .table-container {
+                width: 80%;
+                margin: auto;
+            }
+
+            .table-container .btn-create-new {
+                margin-top: 10px;
+            }
+        </style>
+
+        <div class="table-container">
+            <h1 class="text-center mb-4">User Index</h1>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>UserType</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.Username }}</td>
+                        <td>{{ user.Email }}</td>
+                        <td>{{ user.Password }}</td>
+                        <td>{{ user.UserType }}</td>
+                        <td>
+                            <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-primary btn-sm">Show</a>
+                            <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="text-center">
+                <a href="{{ path('app_user_new') }}" class="btn btn-success btn-create-new">Create New</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+>>>>>>> ae7b171d2cd1e5447ccbe97227b7d7ad15fd3d46
