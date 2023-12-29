@@ -41,7 +41,18 @@ class AnnonceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
+    /**
+     * @param int $userId
+     * @return Annonce[] Returns an array of Annonce objects
+     */
+    public function findByUserId(int $userId): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.user = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Annonce[] Returns an array of Annonce objects
@@ -67,5 +78,6 @@ class AnnonceRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 
 }

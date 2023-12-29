@@ -115,4 +115,18 @@ class AnnonceController extends AbstractController
 
         return $this->redirectToRoute('app_annonce_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/annonces/by-user/{id}', name: 'annonces_by_user')]
+    public function getAnnoncesByUser(AnnonceRepository $annonceRepository, int $id): Response
+    {
+        $annonces = $annonceRepository->findByUserId($id);
+
+        // Now $annonces contains all annonces created by the user with $userId
+
+        // Add your logic here...
+
+        return $this->render('annonce/index.html.twig', [
+            'annonces' => $annonces,
+        ]);
+    }
 }
