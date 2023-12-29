@@ -79,5 +79,18 @@ class AnnonceRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+    /**
+     * @param int $categoryId
+     * @return Annonce[]
+     */
+    public function findByCategoryId(int $categoryId): array
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.category', 'c')
+            ->andWhere('c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->getQuery()
+            ->getResult();
+    }
 
 }

@@ -129,4 +129,24 @@ class AnnonceController extends AbstractController
             'annonces' => $annonces,
         ]);
     }
+
+
+    /**
+     * @Route("/annonces-by-category/{categoryId}", name="annonces_by_category")
+     * @param AnnonceRepository $annonceRepository
+     * @param int $categoryId
+     * @return Response
+     */
+    #[Route('/annonces-by-category/{id}', name:'annonces_by_category')]
+    public function annoncesByCategory(AnnonceRepository $annonceRepository, int $id): Response
+    {
+        $annonces = $annonceRepository->findByCategoryId($id);
+
+        // Do something with the $annonces, for example, pass it to a template
+        // ...
+
+        return $this->render('annonce/index.html.twig', ['annonces' => $annonces]);
+    }
 }
+
+
