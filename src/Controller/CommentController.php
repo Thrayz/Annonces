@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
+use App\Repository\AnnonceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,5 +88,29 @@ class CommentController extends AbstractController
         }
 
         return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/comments-by-user/{id}", name="comments_by_user")
+     * @param AnnonceRepository $annonceRepository
+     * @param int $id
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+
+     * @return Response
+     */
+    #[Route('/comments-by-user/{id}', name: 'comments_by_user')]
+    public function commentsByUser(Request $request,AnnonceRepository $annonceRepository, int $id, PaginatorInterface $paginator): Response
+    {
+        $comments = $annonceRepository->findByUserId($id);
+
+        // Do something with the $comments, for example, pass it to a template
+        // ...
+        $pagination = $paginator->paginate(
+            $comments,
+            $request->query->getInt('page', 1), // Current page number, 1 by default
+            10 // Number of items per page
+        );
+        return $this->render('comment/index.html.twig', ['pagination' => $pagination]);
     }
 }

@@ -25,6 +25,17 @@
                 <tr>
                     <td>{{ comment.id }}</td>
                     <td>{{ comment.content }}</td>
+                    <td>
+
+                        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ path('app_comment_show', {'id': comment.id}) }}" class="btn btn-warning btn-sm">show</a>
+
+
+                    </td>
+                    <td>
+                    <a href="{{ path('comments_by_user', {'id': comment.id}) }}">comment by user</a>
+                    </td>
+
                     <!-- Add more columns as needed -->
                 </tr>
             {% else %}
@@ -35,6 +46,6 @@
             </tbody>
         </table>
 
-        {{ knp_pagination_render(pagination) }}
+
     </div>
 {% endblock %}
