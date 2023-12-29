@@ -78,4 +78,18 @@ class Comment
 
         return $this;
     }
+    /**
+     * @param int $userId
+     * @return comment[]
+     */
+    public function findCommentsByUserId(int $userId): array
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.comments', 'u')
+            ->andWhere('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
