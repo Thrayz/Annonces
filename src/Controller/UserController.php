@@ -10,24 +10,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/user')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
+    public function index(UserRepository $userRepository): Response
     {
-        $query = $userRepository->createQueryBuilder('u')->getQuery();
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            5
-        );
-
         return $this->render('user/index.html.twig', [
-            'pagination' => $pagination,
+            'users' => $userRepository->findAll(),
         ]);
     }
 
@@ -36,20 +27,31 @@ class UserController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $errorMessages = null;
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($user);
-            $entityManager->flush();
+        if ($request->isMethod('POST')) {
+            try {
+                $form->handleRequest($request);
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+                }
+            } catch (UniqueConstraintViolationException $e) {
+                $errorMessages = 'The data you are trying to save violates a unique constraint.';
+                $this->logger->error('Unique Constraint Violation: ' . $e->getMessage());
+            }
         }
 
         return $this->render('user/new.html.twig', [
+            'errorMessage' => $errorMessages,
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
@@ -87,6 +89,4 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
-
-
 }
