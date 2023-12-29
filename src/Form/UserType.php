@@ -6,19 +6,26 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Username')
-            ->add('Email')
-            ->add('Password')
-            ->add('UserType')
+            ->add('email')
+            ->add('roles', ChoiceType::class, [
+            'choices' => [
+                'User' => 'ROLE_USER',
+                'Admin' => 'ROLE_ADMIN',
+                'Advertsier' => 'ROLE_ADVERTISER'
+            ],
+            'multiple' => true,
+            'expanded' => true,
+        ])
+            ->add('password')
+            ->add('username')
         ;
     }
 
@@ -28,6 +35,4 @@ class UserType extends AbstractType
             'data_class' => User::class,
         ]);
     }
-
-
 }
