@@ -65,9 +65,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_annonce_new') }}">New Announcement</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('search') }}">Search</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Logout</a>
                 </li>
@@ -90,7 +88,7 @@
         </div>
 
         <div class="card-deck">
-            {% for annonce in annonces %}
+            {% for annonce in pagination %}
             <div class="card">
                 <img src="{{ annonce.Images }}" class="card-img-top" alt="{{ annonce.Name }}">
                 <div class="card-body">
@@ -109,7 +107,7 @@
             {% endfor %}
         </div>
 
-        {% if annonces is empty %}
+        {% if pagination is empty %}
             <p class="text-muted">No records found.</p>
         {% endif %}
     </div>

@@ -1,13 +1,29 @@
+{# templates/annonce/search.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}New Annonce{% endblock %}
+{% block title %}Search Annonces{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add any custom styles for the search form */
+        .search-box {
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    {# templates/annonce/search.html.twig #}
-    <a href="{{ path('app_annonce_index') }}">back to list</a>
-    {{ form_start(form) }}
-    {{ form_row(form.keyword) }}
-    <button type="submit">Search</button>
-    {{ form_end(form) }}
+    <div class="container">
+        <h1 class="mt-4">Search Annonces</h1>
 
+        {{ form_start(form, {'attr': {'class': 'form-inline search-box'}}) }}
+        {{ form_row(form.query, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Search...'}}) }}
+        <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">
+            <i class="fa fa-search"></i> Search
+        </button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

@@ -12,7 +12,7 @@ class SearchAnnouncementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
+            ->add('query', TextType::class, [
                 'label' => 'Search by Title',
                 'required' => false,
             ]);
@@ -21,7 +21,6 @@ class SearchAnnouncementType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
             'data_class' => null,
         ]);
     }

@@ -19,29 +19,33 @@ class AnnonceController extends AbstractController
 
 
 
-    #[Route('/', name: 'search', methods: ['GET', 'POST'])]
-    public function search(Request $request, AnnonceRepository $annonceRepository, EntityManagerInterface $em): Response
+    #[Route('/search', name: 'annonce_search', methods: ['GET', 'POST'])]
+    public function search(Request $request, AnnonceRepository $annonceRepository): Response
     {
         $form = $this->createForm(SearchAnnouncementType::class);
         $form->handleRequest($request);
 
-        $annonces = $annonceRepository->findAll();
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            // Use $data to perform the search in your repository
-            $annonces = $annonceRepository->findBy(array('Name' => $data));
+            $query = $form->get('query')->getData();
 
+            // Debugging information
+            dump($query);
+
+            // Perform the search logic (customize this according to your needs)
+            $annonces = $annonceRepository->search($query);
+
+            return $this->render('annonce/search_results.html.twig', [
+                'annonces' => $annonces,
+            ]);
         }
 
-        return $this->render('annonce/index.html.twig', [
-            'annonces' => $annonces,
+        return $this->render('annonce/search.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
 
-  
+
     #[Route('/', name: 'app_annonce_index', methods: ['GET'])]
     public function index(Request $request, AnnonceRepository $annonceRepository, PaginatorInterface $paginator): Response
     {
@@ -147,6 +151,9 @@ class AnnonceController extends AbstractController
 
         return $this->render('annonce/index.html.twig', ['annonces' => $annonces]);
     }
+
+
+
 }
 
 
