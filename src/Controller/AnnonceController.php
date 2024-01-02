@@ -48,7 +48,8 @@ class AnnonceController extends AbstractController
 
     #[Route('/', name: 'app_annonce_index', methods: ['GET'])]
     public function index(Request $request, AnnonceRepository $annonceRepository, PaginatorInterface $paginator): Response
-    {
+    {   $searchForm = $this->createForm(SearchAnnouncementType::class);
+        $searchForm->handleRequest($request);
         $query = $annonceRepository->createQueryBuilder('a')
             ->getQuery();
 
@@ -60,6 +61,7 @@ class AnnonceController extends AbstractController
 
         return $this->render('annonce/index.html.twig', [
             'pagination' => $pagination,
+            'form' => $searchForm->createView()
         ]);
     }
 

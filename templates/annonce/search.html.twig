@@ -1,5 +1,3 @@
-{# templates/annonce/search.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Search Annonces{% endblock %}
@@ -7,23 +5,33 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        /* Add any custom styles for the search form */
-        .search-box {
-            margin-bottom: 20px;
-        }
+    .container {
+        margin-bottom: 20px;
+    }
+
+
+
     </style>
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="mt-4">Search Annonces</h1>
+    <div class="container justify-content-center">
+        <div class="search-box">
+            <div class="col-sm-8">
+                {{ form_start(form, {'attr': {'class': 'form-inline', 'action': path('annonce_search')}}) }}
+                {{ form_row(form.query, {
+                    'attr': {
+                        'class': 'form-control mx-auto search-input',
+                        'style': 'width: 510%; bottom: 25px, right:50%, left 50%',
+                        'placeholder': 'Search...'
+                    }
+                }) }}
 
-        {{ form_start(form, {'attr': {'class': 'form-inline search-box'}}) }}
-        {{ form_row(form.query, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Search...'}}) }}
-        <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">
-            <i class="fa fa-search"></i> Search
-        </button>
-        {{ form_end(form) }}
+
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
 {% endblock %}
