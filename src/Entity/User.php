@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return $this->email ?? '';
     }
 
     /**
@@ -99,10 +99,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setUsername(string $username): static
     {
-        $this->password = $username;
+        $this->username = $username;
 
         return $this;
     }
+
 
     /**
      * @see UserInterface
