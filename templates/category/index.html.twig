@@ -35,7 +35,9 @@
                     <td colspan="3">No records found</td>
                 </tr>
             {% endfor %}
-
+            {% if annonce.imagePath %}
+                <img src="{{ asset(annonce.imagePath) }}" alt="Image">
+            {% endif %}
 
 
             </tbody>
