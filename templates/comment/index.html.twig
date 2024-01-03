@@ -5,47 +5,28 @@
 {% block stylesheets %}
     {{ parent() }}
     <!-- Include Bootstrap CSS from CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 {% endblock %}
 
 {% block body %}
     <div class="container mt-4">
         <h1>Comment Index</h1>
 
-        <table class="table table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <!-- Add more columns as needed -->
-            </tr>
-            </thead>
-            <tbody>
-            {% for comment in pagination %}
-                <tr>
-                    <td>{{ comment.id }}</td>
-                    <td>{{ comment.content }}</td>
-                    <td>
+        {% for comment in pagination %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p class="card-text">{{ comment.content }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{{ path('app_comment_show', {'id': comment.id}) }}" class="btn btn-sm btn-info">Show</a>
+                        </div>
 
-                        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="{{ path('app_comment_show', {'id': comment.id}) }}" class="btn btn-warning btn-sm">show</a>
-
-
-                    </td>
-                    <td>
-                    <a href="{{ path('comments_by_user', {'id': comment.id}) }}">comment by user</a>
-                    </td>
-
-                    <!-- Add more columns as needed -->
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="2">No records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No records found</p>
+        {% endfor %}
     </div>
 {% endblock %}
