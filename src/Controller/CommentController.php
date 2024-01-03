@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Entity\Annonce;
+
 
 #[Route('/comment')]
 class CommentController extends AbstractController
@@ -112,5 +114,64 @@ class CommentController extends AbstractController
             10 // Number of items per page
         );
         return $this->render('comment/index.html.twig', ['pagination' => $pagination]);
+    }
+
+    #[Route('/comments-by-annonce/{id}', name: 'comments_by_annonce')]
+    public function commentsByAnnonce(Request $request,CommentRepository $commentRepository, int $id, PaginatorInterface $paginator): Response
+    {
+        $comments = $commentRepository->findByAnnonceId($id);
+
+        // Do something with the $comments, for example, pass it to a template
+        // ...
+        $pagination = $paginator->paginate(
+            $comments,
+            $request->query->getInt('page', 1), // Current page number, 1 by default
+            10 // Number of items per page
+        );
+        return $this->render('comment/index.html.twig', ['pagination' => $pagination]);
+    }
+
+    #[Route('/{annonceId}/add-comment', name: 'app_comment_add',  methods: ['GET', 'POST'])]
+    public function newc(Request $request, int $annonceId, EntityManagerInterface $entityManager): Response
+    {
+        // Get the current user
+        $user = $this->getUser();
+
+        // Check if the user is authenticated
+        if (!$user) {
+            // Redirect to login or handle the scenario where the user is not authenticated
+            // You can customize this part based on your authentication logic
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Create a new comment and set the user and annonce
+        $comment = new Comment();
+        $comment->setUser($user);
+
+        // You can also fetch the Annonce entity using the $annonceId and set it to the comment
+        $annonce = $entityManager->getRepository(Annonce::class)->find($annonceId);
+        $comment->setAnnonce($annonce);
+
+        // Handle form submission
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            // Redirect to the annonce show page after adding the comment
+            return $this->redirectToRoute('app_annonce_show', ['id' => $annonceId]);
+        }
+
+        // If form submission is unsuccessful or it's a GET request, render the newc template
+        return $this->render('comment/newc.html.twig', [
+            'comment' => $comment,
+            'form' => $form->createView(),
+            $form->remove('user'),
+            $form->remove('annonce'),
+
+            'annonce' => $annonce,
+        ]);
     }
 }

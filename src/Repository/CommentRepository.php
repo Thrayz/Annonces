@@ -59,4 +59,13 @@ class CommentRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByAnnonceId(int $id)
+    {return $this->createQueryBuilder('a')
+        ->innerJoin('a.annonces', 'u')
+        ->andWhere('u.id = :id')
+        ->setParameter('id', $id)
+        ->getQuery()
+        ->getResult();
+    }
 }

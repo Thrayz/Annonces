@@ -1,14 +1,12 @@
-{# templates/annonce/search_results.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Search Results{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Add your custom styles for the search results */
         body {
             color: #566787;
             background: #f5f5f5;
@@ -21,19 +19,23 @@
         }
 
         .card-deck {
-            margin-bottom: 20px;
+            margin-bottom: 50px;
         }
 
         .card {
             box-shadow: 0 4px 8px rgba(0,0,0,.1);
             transition: transform 0.3s;
+            margin-bottom: 20px;
         }
 
         .card:hover {
             transform: scale(1.05);
         }
 
-        /* ... other styles ... */
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
     </style>
 {% endblock %}
 
@@ -61,20 +63,18 @@
     <div class="container">
         <h1 class="mt-4">Search Results</h1>
 
-        <div class="card-deck">
+        <div class="row">
             {% for annonce in annonces %}
-            <div class="card">
-                <img src="{{ annonce.Images }}" class="card-img-top" alt="{{ annonce.Name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ annonce.Name }}</h5>
-                    <p class="card-text">{{ annonce.Description }}</p>
-                    <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}" class="btn btn-primary">View Details</a>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ asset('images/' ~ annonce.imageName) }}" alt="Annonce Image" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ annonce.Name }}</h5>
+                            <p class="card-text">{{ annonce.Description }}</p>
+                            <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            {% if loop.index % 3 == 0 %}
-        </div><div class="card-deck">
-            {% endif %}
             {% endfor %}
         </div>
 

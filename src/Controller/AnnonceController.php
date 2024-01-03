@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\CommentRepository;
 
 #[Route('/annonce')]
 class AnnonceController extends AbstractController
@@ -86,12 +87,16 @@ class AnnonceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_annonce_show', methods: ['GET'])]
-    public function show(Annonce $annonce): Response
+    public function show(Annonce $annonce, CommentRepository $commentRepository): Response
     {
+        $comments = $commentRepository->findByAnnonceId($annonce->getId());
+
         return $this->render('annonce/show.html.twig', [
             'annonce' => $annonce,
+            'pagination' => $comments,
         ]);
     }
+
 
     #[Route('/{id}/edit', name: 'app_annonce_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Annonce $annonce, EntityManagerInterface $entityManager): Response

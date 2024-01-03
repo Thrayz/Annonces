@@ -18,10 +18,12 @@ class CommentType extends AbstractType
             ->add('User', EntityType::class, [
                 'class' => 'App\Entity\User',
                 'choice_label' => 'id',
+
             ])
             ->add('Annonce', EntityType::class, [
                 'class' => 'App\Entity\Annonce',
                 'choice_label' => 'id',
+
             ]);
     }
 
