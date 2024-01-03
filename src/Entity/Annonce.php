@@ -8,7 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
+#[Vich\Uploadable]
 class Annonce
 {
     #[ORM\Id]
@@ -19,8 +23,14 @@ class Annonce
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Name = null;
 
-    #[ORM\Column(length: 5000, nullable: true)]
-    private ?string $Images = null;
+    #[Vich\UploadableField(mapping: 'post_annonces', fileNameProperty: 'imageName', size: 'imageSize')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(type: 'string')]
+    private ?string $imageName = null;
+
+    #[ORM\Column(type: 'integer')]
+    private ?int $imageSize = null;
 
     #[ORM\Column(length: 5000, nullable: true)]
     private ?string $Description = null;
@@ -41,6 +51,7 @@ class Annonce
     {
         $this->Categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -60,17 +71,7 @@ class Annonce
         return $this;
     }
 
-    public function getImages(): ?string
-    {
-        return $this->Images;
-    }
 
-    public function setImages(?string $Images): static
-    {
-        $this->Images = $Images;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -187,5 +188,59 @@ class Annonce
     }
 
 
+    /**
+     * @return Image|null
+     */
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Image|null $image
+     * @return $this
+     */
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(?int $imageSize): self
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
 
 }
