@@ -100,9 +100,9 @@ class CommentController extends AbstractController
      * @return Response
      */
     #[Route('/comments-by-user/{id}', name: 'comments_by_user')]
-    public function commentsByUser(Request $request,AnnonceRepository $annonceRepository, int $id, PaginatorInterface $paginator): Response
+    public function commentsByUser(Request $request,CommentRepository $commentRepository, int $id, PaginatorInterface $paginator): Response
     {
-        $comments = $annonceRepository->findByUserId($id);
+        $comments = $commentRepository->findByUserId($id);
 
         // Do something with the $comments, for example, pass it to a template
         // ...

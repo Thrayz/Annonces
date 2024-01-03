@@ -53,7 +53,7 @@ class CommentRepository extends ServiceEntityRepository
     public function findByUserId(int $id): array
     {
         return $this->createQueryBuilder('a')
-            ->innerJoin('a.comments', 'u')
+            ->innerJoin('a.users', 'u')
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()

@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -20,95 +18,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $username = null;
+
     #[ORM\Column]
-    private  $roles = [];
+    private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Annonce::class)]
-    private Collection $Annonces;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
-    private Collection $Comments;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Category::class)]
-    private Collection $Categories;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $username = null;
-
-    public function __construct()
-    {
-        $this->Annonces = new ArrayCollection();
-        $this->Categories = new ArrayCollection();
-        $this->roles = [];
-
-    }
-
-    /**
-     * @return Collection<int, Annonce>
-     */
-    public function getAnnonces(): Collection
-    {
-        return $this->Annonces;
-    }
-
-    public function addAnnonce(Annonce $annonce): static
-    {
-        if (!$this->Annonces->contains($annonce)) {
-            $this->Annonces->add($annonce);
-            $annonce->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnnonce(Annonce $annonce): static
-    {
-        if ($this->Annonces->removeElement($annonce)) {
-            // set the owning side to null (unless already changed)
-            if ($annonce->getUser() === $this) {
-                $annonce->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->Categories;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->Categories->contains($category)) {
-            $this->Categories->add($category);
-            $category->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        if ($this->Categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getUser() === $this) {
-                $category->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
 
     public function getId(): ?int
     {
@@ -171,6 +91,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->password = $username;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -178,22 +111,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(?string $username): static
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->getUsername();
     }
 }

@@ -92,7 +92,14 @@ class AnnonceRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
+    public function search(string $query)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.Name LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
 
 
 

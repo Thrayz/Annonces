@@ -1,13 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Annonce{% endblock %}
+{% block title %}Search Annonces{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+    .container {
+        margin-bottom: 20px;
+    }
+
+
+
+    </style>
+{% endblock %}
 
 {% block body %}
-    {# templates/annonce/search.html.twig #}
-    <a href="{{ path('app_annonce_index') }}">back to list</a>
-    {{ form_start(form) }}
-    {{ form_row(form.keyword) }}
-    <button type="submit">Search</button>
-    {{ form_end(form) }}
+    <div class="container justify-content-center">
+        <div class="search-box">
+            <div class="col-sm-8">
+                {{ form_start(form, {'attr': {'class': 'form-inline', 'action': path('annonce_search')}}) }}
+                {{ form_row(form.query, {
+                    'attr': {
+                        'class': 'form-control mx-auto search-input',
+                        'style': 'width: 510%; bottom: 25px, right:50%, left 50%',
+                        'placeholder': 'Search...'
+                    }
+                }) }}
 
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
