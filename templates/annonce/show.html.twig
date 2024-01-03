@@ -26,8 +26,11 @@
                         <td>{{ annonce.Name }}</td>
                     </tr>
                     <tr>
-                        <th>Images</th>
-                        <td>{{ annonce.Images }}</td>
+
+                        <img src="{{ asset('images/' ~ annonce.imageName) }}" alt="Annonce Image">
+
+
+
                     </tr>
                     <tr>
                         <th>Description</th>
