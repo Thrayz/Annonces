@@ -2,23 +2,19 @@
 
 {% block title %}Announcement List{% endblock %}
 
-{% block body %}
-
+{% block stylesheets %}
+    {{ parent() }}
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .card-deck {
+            margin-bottom: 50px;
+        }
+    </style>
+{% endblock %}
 
-<style>
-    .card{
-
-    }
-    .card-deck {
-        margin-bottom: 50px;
-    }
-</style>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Announcements</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -31,7 +27,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_annonce_new') }}">New Announcement</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
@@ -39,14 +34,14 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container mt-4">
         <div class="search-box">
             {% include 'annonce/search.html.twig' %}
         </div>
 
         <div class="card-deck">
             {% for annonce in pagination %}
-                <div class="col-md-4">
+                <div class="col-md-4 mb-4">
                     <div class="card">
                         <img src="{{ annonce.Images }}" class="card-img-top" alt="{{ annonce.Name }}">
                         <div class="card-body">
@@ -64,4 +59,11 @@
         {% endif %}
     </div>
 
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% endblock %}
 {% endblock %}
