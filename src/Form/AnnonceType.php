@@ -25,8 +25,17 @@ class   AnnonceType extends AbstractType
             ->add('Category', EntityType::class, [
                 'class' => 'App\Entity\Category',
                 'choice_label' => 'id',
+
+            ]);
+
+        $builder
+            ->add('imageFile', FileType::class, [
+                'label' => 'Image',
+                'required' => false, // Change this based on your requirements
+                'mapped' => false,   // This is important to handle file upload manually
             ]);
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -34,4 +43,7 @@ class   AnnonceType extends AbstractType
             'data_class' => Annonce::class,
         ]);
     }
+
+    // Add a FileType field for image uploads
+
 }

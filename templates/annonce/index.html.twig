@@ -97,9 +97,9 @@
                     <h5 class="card-title">{{ annonce.Name }}</h5>
                     <p class="card-text">{{ annonce.Description }}</p>
                     <a href="{{ path('app_annonce_show', {'id': annonce.id}) }}" class="btn btn-primary">View Details</a>
-
-
-
+                    {% if annonce.imagePath %}
+                        <img src="{{ asset(annonce.imagePath) }}" alt="Image">
+                    {% endif %}
                 </div>
             </div>
 
