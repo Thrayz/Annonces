@@ -143,11 +143,16 @@ class AnnonceController extends AbstractController
     {
         $pagination = $annonceRepository->findByUserId($id);
 
+
         // Now $annonces contains all annonces created by the user with $userId
 
         // Add your logic here...
 
         return $this->render('annonce/index3.html.twig', ['pagination' => $pagination]);
+
+       
+        ]);
+
     }
 
 
