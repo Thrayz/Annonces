@@ -2,12 +2,31 @@
 
 {% block title %}Edit Comment{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {# Include Bootstrap CSS via CDN #}
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+{% endblock %}
+
 {% block body %}
-    <h1>Edit Comment</h1>
+    <div class="container mt-4">
+        <h1>Edit Comment</h1>
 
-    {{ include('comment/_form.html.twig', {'button_label': 'Update'}) }}
+        {# Add Bootstrap styles to the form container #}
+        <div class="card">
+            <div class="card-body">
+                {{ include('comment/_form.html.twig', {'button_label': 'Update'}) }}
+            </div>
+        </div>
 
-    <a href="{{ path('app_comment_index') }}">back to list</a>
+        <div class="mt-3">
 
-    {{ include('comment/_delete_form.html.twig') }}
+
+            {# Add Bootstrap styles to the delete form container #}
+            {{ include('comment/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

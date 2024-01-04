@@ -95,11 +95,12 @@ class AnnonceRepository extends ServiceEntityRepository
     public function search(string $query)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.Name LIKE :query')
+            ->andWhere('a.Name LIKE :query OR a.State LIKE :query')
             ->setParameter('query', '%' . $query . '%')
             ->getQuery()
             ->getResult();
     }
+
 
 
 
