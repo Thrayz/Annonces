@@ -71,8 +71,13 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $annonce = $comment->getAnnonce();
 
-            return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+            // Assuming you have a route named 'app_annonce_show' for displaying annonce details
+            $annonceRoute = $this->generateUrl('app_annonce_show', ['id' => $annonce->getId()]);
+
+            return $this->redirect($annonceRoute);
+
         }
 
         return $this->render('comment/edit.html.twig', [
@@ -89,7 +94,12 @@ class CommentController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+        $annonce = $comment->getAnnonce();
+
+        // Assuming you have a route named 'app_annonce_show' for displaying annonce details
+        $annonceRoute = $this->generateUrl('app_annonce_show', ['id' => $annonce->getId()]);
+
+        return $this->redirect($annonceRoute);
     }
 
     /**
