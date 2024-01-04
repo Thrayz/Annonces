@@ -132,10 +132,6 @@ class AnnonceController extends AbstractController
     {
         $annonces = $annonceRepository->findByUserId($id);
 
-        // Now $annonces contains all annonces created by the user with $userId
-
-        // Add your logic here...
-
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonces,
         ]);
