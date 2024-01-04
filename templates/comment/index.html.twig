@@ -25,6 +25,14 @@
                     </div>
                 </div>
             </div>
+
+            <div class="pagination justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {{ knp_pagination_render(pagination) }}
+                    </ul>
+                </nav>
+            </div>
         {% else %}
             <p>No records found</p>
         {% endfor %}

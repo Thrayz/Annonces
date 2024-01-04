@@ -98,13 +98,19 @@ class AnnonceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_annonce_show', methods: ['GET'])]
-    public function show(Annonce $annonce, CommentRepository $commentRepository): Response
+    public function show(Annonce $annonce, CommentRepository $commentRepository,  Request $request,PaginatorInterface $paginator): Response
     {
         $comments = $commentRepository->findByAnnonceId($annonce->getId());
 
+        $pagination = $paginator->paginate(
+            $comments,
+            $request->query->getInt('page', 1),
+            5
+        );
+
         return $this->render('annonce/show.html.twig', [
             'annonce' => $annonce,
-            'pagination' => $comments,
+            'pagination' => $pagination,
         ]);
     }
 

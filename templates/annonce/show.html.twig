@@ -77,6 +77,15 @@
                                 </div>
                             </div>
                         {% endfor %}
+
+
+                        <div class="pagination justify-content-center">
+                            <nav aria-label="Comment pagination">
+                                <ul class="pagination">
+                                    {{ knp_pagination_render(pagination) }}
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 {% else %}
                     <p>No comments available.</p>
@@ -84,7 +93,6 @@
 
                 {% if app.user %}
                     <form action="{{ path('app_comment_add', {'annonceId': annonce.id}) }}" method="post">
-
                         <button type="submit" class="btn btn-primary">Add Comment</button>
                     </form>
                 {% endif %}

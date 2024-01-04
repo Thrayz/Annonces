@@ -131,12 +131,10 @@ class CommentController extends AbstractController
     {
         $comments = $commentRepository->findByAnnonceId($id);
 
-        // Do something with the $comments, for example, pass it to a template
-        // ...
         $pagination = $paginator->paginate(
             $comments,
-            $request->query->getInt('page', 1), // Current page number, 1 by default
-            10 // Number of items per page
+            $request->query->getInt('page', 1),
+            5
         );
         return $this->render('comment/index.html.twig', ['pagination' => $pagination]);
     }

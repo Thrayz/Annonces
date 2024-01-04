@@ -67,10 +67,21 @@
                 </div>
             {% endfor %}
         </div>
+        {# Display pagination controls with Bootstrap styling #}
+        <div class="pagination justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {{ knp_pagination_render(pagination) }}
+                </ul>
+            </nav>
+        </div>
+
+
 
         {% if pagination is empty %}
             <p class="text-muted">No records found.</p>
         {% endif %}
+
     </div>
 
     {% block javascripts %}
