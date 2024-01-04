@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CommentRepository;
+use Symfony\Component\Security\Core\Security;
+
 
 #[Route('/annonce')]
 class AnnonceController extends AbstractController
@@ -67,9 +69,18 @@ class AnnonceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_annonce_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $annonce = new Annonce();
+
+        // Get the current user
+        $user = $security->getUser();
+
+        // Set the current user as the creator of the announcement
+        if ($user) {
+            $annonce->setUser($user);
+        }
+
         $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
@@ -82,7 +93,7 @@ class AnnonceController extends AbstractController
 
         return $this->render('annonce/new.html.twig', [
             'annonce' => $annonce,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -127,18 +138,16 @@ class AnnonceController extends AbstractController
         return $this->redirectToRoute('app_annonce_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/annonces/by-user/{id}', name: 'annonces_by_user')]
+    #[Route('/annonces-by-user/{id}', name: 'annonces_by_user')]
     public function getAnnoncesByUser(AnnonceRepository $annonceRepository, int $id): Response
     {
-        $annonces = $annonceRepository->findByUserId($id);
+        $pagination = $annonceRepository->findByUserId($id);
 
         // Now $annonces contains all annonces created by the user with $userId
 
         // Add your logic here...
 
-        return $this->render('annonce/index.html.twig', [
-            'annonces' => $annonces,
-        ]);
+        return $this->render('annonce/index3.html.twig', ['pagination' => $pagination]);
     }
 
 
@@ -148,16 +157,16 @@ class AnnonceController extends AbstractController
      * @param int $categoryId
      * @return Response
      */
-    #[Route('/annonces-by-category/{id}', name:'annonces_by_category')]
-    public function annoncesByCategory(AnnonceRepository $annonceRepository, int $id): Response
+    public function annoncesByCategory(AnnonceRepository $annonceRepository, int $categoryId): Response
     {
-        $annonces = $annonceRepository->findByCategoryId($id);
+        $pagination = $annonceRepository->findByCategoryId($categoryId);
 
         // Do something with the $annonces, for example, pass it to a template
         // ...
 
-        return $this->render('annonce/index.html.twig', ['annonces' => $annonces]);
+        return $this->render('annonce/index2.html.twig', ['pagination' => $pagination]);
     }
+
 
 
 

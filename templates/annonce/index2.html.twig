@@ -37,10 +37,10 @@
                 </li>
                 {% endif %}
                 {% if app.user and is_granted('ROLE_MEMBER') %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('annonces_by_user', {'id': app.user.id}) }}" >My Announcements</a>
-                    {% endif %}
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('annonces_by_user') }}">My Announcments</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                 </li>
@@ -48,10 +48,6 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <div class="search-box">
-            {% include 'annonce/search.html.twig' %}
-        </div>
 
         <div class="card-deck">
             {% for annonce in pagination %}
