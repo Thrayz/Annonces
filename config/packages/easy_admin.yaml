@@ -1,0 +1,14 @@
+easy_admin:
+  entities:
+    Annonce:
+      class: App\Entity\Annonce
+      controller: App\Controller\Admin\AnnonceCrudController
+    Category:
+      class: App\Entity\Category
+      controller: App\Controller\Admin\CategoryCrudController
+    Comment:
+      class: App\Entity\Comment
+      controller: App\Controller\Admin\CommentCrudController
+    User:
+      class: App\Entity\User
+      controller: App\Controller\Admin\UserCrudController

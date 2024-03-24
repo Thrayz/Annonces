@@ -1,0 +1,23 @@
+
+{# templates/Exception/error403.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Forbidden{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .centered-text {
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="centered-text">
+        <h1>404 Not Found</h1>
+        <p>I swear it was here last i checked.</p>
+        <a href="https://127.0.0.1:8000/annonce/" class="btn btn-primary">Return to Index</a>
+    </div>
+{% endblock %}

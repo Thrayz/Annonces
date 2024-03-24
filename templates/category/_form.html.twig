@@ -1,0 +1,7 @@
+{# templates/category/_form.html.twig #}
+{{ form_start(form, {'attr': {'class': 'form'}}) }}
+<div class="mb-3">
+    {{ form_row(form.CategoryName, {'attr': {'class': 'form-control'}}) }}
+</div>
+<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

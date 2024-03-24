@@ -1,0 +1,25 @@
+{# templates/annonce/_form.html.twig #}
+{{ form_start(form, {'attr': {'class': 'form'}}) }}
+<div class="mb-3">
+    {{ form_row(form.Name, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="mb-3">
+    {{ form_row(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="mb-3">
+    {{ form_row(form.Description, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="mb-3">
+    {{ form_row(form.Date, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="mb-3">
+    {{ form_row(form.State, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="mb-3">
+    {{ form_row(form.User, {'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="mb-3">
+    {{ form_row(form.Category, {'attr': {'class': 'form-control'}}) }}
+</div>
+<button type="submit" class="btn btn-success">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
